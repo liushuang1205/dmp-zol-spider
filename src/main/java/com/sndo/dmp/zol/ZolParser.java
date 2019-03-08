@@ -86,11 +86,11 @@ public class ZolParser {
 
         String downloadUrl = parseDownloadUrl(doc);
         if (downloadUrl != null) {
-            resultDoc.put("downloadUrl", downloadUrl);
+            resultDoc.put("download_url", downloadUrl);
         }
 
         boolean isFree = parseIsFree(doc);
-        resultDoc.put("isFree",isFree);
+        resultDoc.put("is_free",isFree);
 
         String provider = parseProvider(doc);
         if(provider != null){
@@ -99,12 +99,12 @@ public class ZolParser {
 
         String language = parseLanguage(doc);
         if(language != null){
-            resultDoc.put("language",language);
+            //resultDoc.put("language",language);
         }
 
         List<String> screenshots = parseScreenshot(doc);
         if (screenshots != null) {
-            resultDoc.put("screenshotUrl", screenshots);
+            //resultDoc.put("screenshotUrl", screenshots);
             List<String> saveFilePathList = new ArrayList<String>();
             for (String cur : screenshots) {
                 String saveFilePath = add2ImageDownloadQueue(url, cur, true);
