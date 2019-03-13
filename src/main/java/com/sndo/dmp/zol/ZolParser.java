@@ -17,6 +17,7 @@ public class ZolParser {
 
     public org.bson.Document pageGame(String url, String referer, Document doc){
         org.bson.Document resultDoc = new org.bson.Document();
+        org.bson.Document android = new org.bson.Document();
         resultDoc.put("url",url);
         resultDoc.put("referer",referer);
 
@@ -32,7 +33,8 @@ public class ZolParser {
 
         String logoUrl = parseLogoUrl(doc);
         if(StringUtils.isNotBlank(logoUrl)){
-            resultDoc.put("logoUrl",logoUrl);
+            android.put("logo_url",logoUrl);
+            //resultDoc.put("logo_url",logoUrl);
             String localLogoImagePath = add2ImageDownloadQueue(url,logoUrl,false);
             if(StringUtils.isNotBlank(localLogoImagePath)){
                 resultDoc.put("localLogoImagePath", localLogoImagePath);
@@ -51,22 +53,26 @@ public class ZolParser {
 
         String size = parseSize(doc);
         if (size != null) {
-            resultDoc.put("size", size);
+            //resultDoc.put("size", size);
+            android.put("size", size);
         }
 
         String version = parseVersion(doc);
         if (version != null) {
-            resultDoc.put("version", version);
+            //resultDoc.put("version", version);
+            android.put("version", version);
         }
 
         String versionDate = parseVersionDate(doc);
         if (versionDate != null) {
-            resultDoc.put("version_date", versionDate);
+            //resultDoc.put("version_date", versionDate);
+            android.put("version_date", versionDate);
         }
 
         String downloads = parseDownloads(doc);
         if (downloads != null) {
-            resultDoc.put("download_count", downloads);
+            //resultDoc.put("download_count", downloads);
+            android.put("download_count", downloads);
         }
 
         String score = parseScore(doc);
@@ -76,7 +82,8 @@ public class ZolParser {
 
         String require = parseRequire(doc);
         if (require != null) {
-            resultDoc.put("require", require);
+            //resultDoc.put("require", require);
+            android.put("require", require);
         }
 
         String updateLog = parseUpdateLog(doc);
@@ -86,11 +93,13 @@ public class ZolParser {
 
         String downloadUrl = parseDownloadUrl(doc);
         if (downloadUrl != null) {
-            resultDoc.put("download_url", downloadUrl);
+            //resultDoc.put("download_url", downloadUrl);
+            android.put("download_url", downloadUrl);
         }
 
         boolean isFree = parseIsFree(doc);
-        resultDoc.put("is_free",isFree);
+        //resultDoc.put("is_free",isFree);
+        android.put("is_free",isFree);
 
         String provider = parseProvider(doc);
         if(provider != null){
@@ -110,12 +119,17 @@ public class ZolParser {
                 String saveFilePath = add2ImageDownloadQueue(url, cur, true);
                 saveFilePathList.add(saveFilePath);
             }
-            resultDoc.put("game_capture", saveFilePathList);
+            //resultDoc.put("game_capture", saveFilePathList);
+            android.put("game_capture", saveFilePathList);
         }
 
         int commentNum = parseCommentNum(doc);
         if (commentNum > 0) {
             resultDoc.put("commentNum", commentNum);
+        }
+
+        if(android != null){
+            resultDoc.put("android",android);
         }
 
         return resultDoc;
