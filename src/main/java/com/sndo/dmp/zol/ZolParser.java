@@ -33,11 +33,12 @@ public class ZolParser {
 
         String logoUrl = parseLogoUrl(doc);
         if(StringUtils.isNotBlank(logoUrl)){
-            android.put("logo_url",logoUrl);
+            //android.put("logo_url",logoUrl); //线上的url地址
             //resultDoc.put("logo_url",logoUrl);
             String localLogoImagePath = add2ImageDownloadQueue(url,logoUrl,false);
             if(StringUtils.isNotBlank(localLogoImagePath)){
-                resultDoc.put("localLogoImagePath", localLogoImagePath);
+                //resultDoc.put("localLogoImagePath", localLogoImagePath);
+                android.put("logo_url",logoUrl);
             }
         }
 
