@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.MongoCollection;
 import com.sndo.dmp.GameField;
 import com.sndo.dmp.ImageDownloader;
+import com.sndo.dmp.load.util.WordSegmentUtil;
 import com.sndo.dmp.mongo.MongoServer;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,8 @@ import java.util.*;
 
 public class UGameParser {
 
+    private List<String> imageHorizontalVertical = null;
+
     public Document parse(String url, byte[] bytes) throws UnsupportedEncodingException {
         String content = new String(bytes, "UTF-8");
         JSONObject jsonObject = JSON.parseObject(content);
@@ -32,6 +35,9 @@ public class UGameParser {
 
         String name = parseGameName(jsonObject);
         doc.put(GameField.NAME.getValue(), name);
+
+        List<String> wordSegment = WordSegmentUtil.getWordSegment(name);
+        doc.put(GameField.WORDSEGMENT.getValue(), wordSegment);
 
         List<Integer> category = parseCategory(jsonObject);
         doc.put(GameField.CATEGORY_ID.getValue(), category);
@@ -74,7 +80,10 @@ public class UGameParser {
 
         List<String> gameCapturelist = parseGameCapture(url,jsonObject);
         android.put(GameField.GAME_ANDROID_GAME_CAPTURE.getValue(), gameCapturelist);
-        android.put(GameField.GAME_ANDROID_GAME_CAPTURE_FLAG.getValue(), imageHorizontalVertical);
+
+        if(imageHorizontalVertical != null){
+            android.put(GameField.GAME_ANDROID_GAME_CAPTURE_FLAG.getValue(), imageHorizontalVertical);
+        }
 
         //String require = parseRequire(jsonObject);
 
@@ -87,7 +96,7 @@ public class UGameParser {
 
         doc.put(GameField.FILTER_FLAG.getValue(), 0); //状态标识 0 正常 1 暂停 默认正常
 
-        doc.put(GameField.IS_VALID.getValue(), "1"); //android游戏apk是否可以正常下载 0 不可下载 1 可下载 默认为 1
+        doc.put(GameField.IS_VALID.getValue(), 1); //android游戏apk是否可以正常下载 0 不可下载 1 可下载 默认为 1
 
         doc.put(GameField.IS_AD.getValue(), 2); //游戏广告类型 0 不是广告 1 后台上传的广告 2 第三方广告
 
@@ -128,7 +137,7 @@ public class UGameParser {
     }
 
     private Integer getId() {
-        MongoCollection<Document> collection = MongoServer.getCollection("game", "inrc");
+        MongoCollection<Document> collection = MongoServer.getCollection("game_app", "inrc");
         Document filter = new Document();
         filter.put("id","inrcid");
 
@@ -158,6 +167,14 @@ public class UGameParser {
         for(int i = 0; i < categories.length; i++){
             if(categories[i].contains(value)){
                 return i + 1;
+            }else if("卡牌".equals(value)){
+                return 2;
+            }else if("回合".equals(value)){
+                return 4;
+            }else if("模拟".equals(value)){
+                return 9;
+            }else if("音乐".equals(value) || "即时".equals(value)){
+                return 4;
             }
         }
         return -1;
@@ -171,12 +188,16 @@ public class UGameParser {
         String category = jsonObject.getJSONObject("data").getJSONObject("game").getString("categoryName");
         List<Integer> categories = new ArrayList<>();
         int categoryId = getCategoryId(category);
-        categories.add(categoryId);
+        if(categoryId != -1){
+            categories.add(categoryId);
+        }
 
         String name = parseGameName(jsonObject);
         if(StringUtils.isNotBlank(name)){
             categoryId = getCategoryIdByName(name);
-            categories.add(categoryId);
+            if(categoryId != -1){
+                categories.add(categoryId);
+            }
         }
         return categories;
     }
@@ -232,11 +253,10 @@ public class UGameParser {
         }
     }
 
-    private List<String> imageHorizontalVertical = new ArrayList<>();
-
     private List<String> parseGameCapture(String url,JSONObject jsonObject) {
         List<String> saveFilePathList = new ArrayList<>();
         JSONArray array = jsonObject.getJSONObject("data").getJSONArray("images");
+        imageHorizontalVertical = new ArrayList<>();
         for (int i = 0; i < array.size(); i++){
             String imgUrl = array.getJSONObject(i).getString("url");
             Integer width = Integer.valueOf(array.getJSONObject(i).getString("width"));
@@ -247,7 +267,6 @@ public class UGameParser {
 
             String horizontalVertical = getVerticalImage(width,height);
             imageHorizontalVertical.add(horizontalVertical);
-
         }
         return saveFilePathList;
     }

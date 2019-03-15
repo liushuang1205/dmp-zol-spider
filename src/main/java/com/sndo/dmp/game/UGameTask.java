@@ -29,7 +29,6 @@ public class UGameTask {
         }
     }
 
-
     public static void main(String[] args) {
         UGameTask task = new UGameTask();
         try {

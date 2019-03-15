@@ -11,7 +11,7 @@ public class UGamePipeline {
     private ImageDownloader imageDownloader;
 
     public UGamePipeline(){
-        collection = MongoServer.getCollection("game_app","game");
+        collection = MongoServer.getCollection("game_app","gameTest");
         imageDownloader = new ImageDownloader();
 
         imageDownloader.start();
