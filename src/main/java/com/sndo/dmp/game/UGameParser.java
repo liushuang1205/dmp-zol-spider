@@ -7,7 +7,6 @@ import com.mongodb.client.MongoCollection;
 import com.sndo.dmp.GameField;
 import com.sndo.dmp.ImageDownloader;
 import com.sndo.dmp.mongo.MongoServer;
-import com.sndo.dmp.util.WordSegmentUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
@@ -36,8 +35,8 @@ public class UGameParser {
         String name = parseGameName(jsonObject);
         doc.put(GameField.NAME.getValue(), name);
 
-        List<String> wordSegment = WordSegmentUtil.getWordSegment(name);
-        doc.put(GameField.WORDSEGMENT.getValue(), wordSegment);
+       /* List<String> wordSegment = WordSegmentUtil.getWordSegment(name);
+        doc.put(GameField.WORDSEGMENT.getValue(), wordSegment);*/
 
         List<Integer> category = parseCategory(jsonObject);
         doc.put(GameField.CATEGORY_ID.getValue(), category);
@@ -104,7 +103,7 @@ public class UGameParser {
     }
 
 
-    private static final String baseDir = "G:\\";
+    private static final String baseDir = "E:\\imga\\";
 
     private String add2ImageDownloadQueue(String websiteUrl, String imageUrl, boolean type) {
         String saveFilePath = getSaveFilePath(type, websiteUrl);

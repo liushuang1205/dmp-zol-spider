@@ -32,4 +32,16 @@ public class UGameDownloader {
         CloseableHttpResponse execute = httpCilent.execute(httpGet);
         return EntityUtils.toByteArray(execute.getEntity());
     }
+
+    public static void main(String[] args){
+        String url = "http://ugame.9game.cn/game/share-193941-574245.html";
+        UGameDownloader downloader = new UGameDownloader();
+        try {
+            downloader.download(url);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

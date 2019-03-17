@@ -27,7 +27,7 @@ public class WordSegmentUtil {
             if(StringUtils.isBlank(word)){
                 return null;
             }
-            HttpPost post = new HttpPost(UploadConfig.wordSegmentHost());
+            HttpPost post = new HttpPost("http://servicenode06/wordseg/lactag");
             post.setHeader("Content-type", "application/json; charset=utf-8");
             JSONObject param = new JSONObject();
             param.put("content", word);
@@ -66,7 +66,7 @@ public class WordSegmentUtil {
 
     public static void main(String[] args){
 
-       List<String> list =  WordSegmentUtil.getWordSegment("炉石传说魔兽8.0主题卡背怎么得 炉石传说争霸");
+      List<String> list =  WordSegmentUtil.getWordSegment("炉石传说魔兽8.0主题卡背怎么得 炉石传说争霸");
        System.out.println("the list:"+list);
 
     }
