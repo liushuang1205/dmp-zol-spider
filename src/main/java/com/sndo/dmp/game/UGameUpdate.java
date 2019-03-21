@@ -2,10 +2,12 @@ package com.sndo.dmp.game;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.sndo.dmp.mongo.MongoServer;
 import org.bson.Document;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +57,44 @@ public class UGameUpdate {
         System.out.println("修改完毕！");
     }
 
+    public void findName(){
+        List<String> names = new ArrayList<>();
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\liushuang\\Desktop\\游戏名.txt"),"GBK"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String line;
+        while(true){
+            try {
+                if (!((line = reader.readLine()) != null)) break;
+                names.add(line);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        int i = 0;
+        for(String name : names){
+            Document filter = new Document();
+            filter.put("name", name);
+            Document doc = collection.find(filter).first();
+
+            System.out.println("id :"+ doc.getInteger("id") +" == " + i +"   --->" + doc.getString("name"));
+            i++;
+        }
+
+    }
+
     public static void main(String[] args){
         UGameUpdate update = new UGameUpdate();
-        List<Map<String,Object>> data = update.find();
-        update.update(data);
+        /*List<Map<String,Object>> data = update.find();
+        update.update(data);*/
+        update.findName();
     }
 }
