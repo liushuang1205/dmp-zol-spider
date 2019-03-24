@@ -17,7 +17,8 @@ public class MongoServer {
     private static MongoClient client = null;
 
     static {
-        client = new MongoClient(new ServerAddress("192.168.1.151", 27017),//192.168.157.2
+        //"192.168.1.151"
+        client = new MongoClient(new ServerAddress("192.168.120.128", 27017),//192.168.157.2
                 new MongoClientOptions.Builder().build());
     }
 

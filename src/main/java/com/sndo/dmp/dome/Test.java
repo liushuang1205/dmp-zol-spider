@@ -48,8 +48,15 @@ public class Test {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        String url = "http://ugame.9game.cn/game/downloadGame?pack.cooperateModelId=193941&pack.id=28598384&from=share";
+       /* String url = "http://ugame.9game.cn/game/downloadGame?pack.cooperateModelId=193941&pack.id=28598384&from=share";
         int index = url.lastIndexOf("&");
-        System.out.println(url.substring(0,index));
+        System.out.println(url.substring(0,index));*/
+
+        int i = 1;
+        if(i > 1){
+            System.out.println("大于"+i);
+        }else{
+            System.out.println(i);
+        }
     }
 }
