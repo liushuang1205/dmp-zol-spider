@@ -3,7 +3,7 @@ package com.sndo.dmp.dome;
 public class LoaderConfig {
 
     private String onlineDB;
-    private String onlineIncrCol;
+    private String onlineInrcCol;
     private String onlineGameCol;
     private String onlinePicDir;
 
@@ -20,11 +20,11 @@ public class LoaderConfig {
     }
 
     public String getOnlineIncrCol() {
-        return onlineIncrCol;
+        return onlineInrcCol;
     }
 
-    public void setOnlineIncrCol(String onlineIncrCol) {
-        this.onlineIncrCol = onlineIncrCol;
+    public void setOnlineInrcCol(String onlineIncrCol) {
+        this.onlineInrcCol = onlineIncrCol;
     }
 
     public String getOnlineGameCol() {
@@ -55,7 +55,7 @@ public class LoaderConfig {
         return srcCol;
     }
 
-    public void setSrcCol(String srcCol) {
+    public void setSrcGameCol(String srcCol) {
         this.srcCol = srcCol;
     }
 

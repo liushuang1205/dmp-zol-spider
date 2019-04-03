@@ -56,6 +56,26 @@ public class LoaderTask {
         queue.put(new Document());
     }
 
+    //    private void doUpsert(Document doc) {
+//        Document resultDoc = getResultDoc(doc);
+//        String iosOrAndr = iosOrAndroid(doc);
+//        if(iosOrAndr != null){
+//            if (resultDoc.get(iosOrAndr) == null){
+//                Document query = new Document();
+//                query.put("name",doc.getString("name"));
+//
+//                doc.remove("_id");
+//                onlineGameCollection.findOneAndUpdate(query, new Document("$set", doc), option);
+//
+//                List<Document> docs = new ArrayList<>();
+//                docs.add(doc);
+//
+//                movePicture(docs);
+//                doBatchUpdate(docs);
+//            }
+//        }
+//    }
+
     private Document setID(Document doc) {
         int id = getID();
         doc.put("id", id);

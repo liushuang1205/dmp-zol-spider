@@ -1,22 +1,25 @@
 package com.sndo.dmp.dome;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.FindOneAndDeleteOptions;
-import com.mongodb.client.model.FindOneAndReplaceOptions;
-import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.*;
 import com.sndo.dmp.mongo.MongoServer;
 import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MongoUpdateTest {
 
     private static MongoCollection<Document> collection;
     private static FindOneAndUpdateOptions updateOptions = new FindOneAndUpdateOptions();
     private static FindOneAndDeleteOptions deleteOptions = new FindOneAndDeleteOptions();
+    private static UpdateOptions options = new UpdateOptions();
 
 
     public MongoUpdateTest(){
         collection = MongoServer.getCollection("updateTest","test");
         updateOptions.upsert(true);
+        options.upsert(true);
 
     }
 
@@ -51,6 +54,7 @@ public class MongoUpdateTest {
 
         collection.updateOne(qury ,new Document("$unset", update));
     }
+
 
     public static void main(String[] args){
         updateAndDel();
