@@ -87,7 +87,7 @@ public class PicHW {
     public void qury(){
 
         //MongoCursor<Document> srcDocs = collection.find().iterator();
-        collection = MongoServer.getOnlineCollection("game_app","app_game");
+        collection = MongoServer.getCollection("game_app","app_game");
 
         Document filter = new Document();
         filter.put("name","龙珠觉醒");

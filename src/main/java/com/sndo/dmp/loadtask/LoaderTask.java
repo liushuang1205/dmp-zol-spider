@@ -6,6 +6,7 @@ import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.UpdateOneModel;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.WriteModel;
+import com.sndo.dmp.dome.LoaderConfig;
 import com.sndo.dmp.mongo.MongoServer;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
@@ -32,9 +33,9 @@ public class LoaderTask {
     private String dstDir;
 
     public LoaderTask(LoaderConfig config) {
-        idCollection = MongoServer.getCollection(config.getOnlineDB(), config.getOnlineInrcCol());
+        idCollection = MongoServer.getCollection(config.getOnlineDB(), config.getOnlineIncrCol());
         onlineGameCollection = MongoServer.getCollection(config.getOnlineDB(), config.getOnlineGameCol());
-        srcGameCollection = MongoServer.getCollection(config.getSrcDB(), config.getSrcGameCol());
+        srcGameCollection = MongoServer.getCollection(config.getSrcDB(), config.getSrcCol());
 
         this.dstDir = config.getOnlinePicDir();
         this.srcDir = config.getSrcPicDir();
@@ -179,7 +180,7 @@ public class LoaderTask {
 
             doc.remove("_id");
 
-            models.add(new UpdateOneModel<>(filterDoc, new Document("$set", doc), updateOptions));
+//            models.add(new UpdateOneModel<>(filterDoc, new Document("$set", doc), updateOptions));
         }
 
         onlineGameCollection.bulkWrite(models);

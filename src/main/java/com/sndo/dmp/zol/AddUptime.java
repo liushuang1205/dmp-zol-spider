@@ -17,7 +17,7 @@ public class AddUptime {
 //
 //    MongoCollection<Document> collection = client.getDatabase("zol_game").getCollection("gameInfo");
 
-    MongoCollection<Document> collection = MongoServer.getSrcCollection("zol_game", "gameInfo");
+    MongoCollection<Document> collection = MongoServer.getCollection("zol_game", "gameInfo");
 
     public void addUptime(){
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();

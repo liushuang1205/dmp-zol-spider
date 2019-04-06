@@ -18,15 +18,15 @@ public class LoaderJob {
     private List<LoaderTask> tasks = new ArrayList<>();
 
     public LoaderJob(){
-        zolTask = new LoaderTask(getZolConfig());
-        pphelperTask = new LoaderTask(getPPHelperConfig());
+//        zolTask = new LoaderTask(getZolConfig());
+//        pphelperTask = new LoaderTask(getPPHelperConfig());
 //        pc6Task = new LoaderTask(getPc6Config());
-        appstroeTask = new LoaderTask(getAppStoreConfig());
-
-        tasks.add(zolTask);
-        tasks.add(pphelperTask);
+//        appstroeTask = new LoaderTask(getAppStoreConfig());
+//
+//        tasks.add(zolTask);
+//        tasks.add(pphelperTask);
 //        tasks.add(pc6Task);
-        tasks.add(appstroeTask);
+//        tasks.add(appstroeTask);
     }
 
     private LoaderConfig getOnlineConfig() {
